@@ -1,0 +1,24 @@
+int main(int argc, char* argv[])
+{   
+
+	char a[50] = "Hello Hello Hello Hello Hello Hello!";
+    char b[50];
+	char c[50];
+
+	uLong ucompSize = strlen(a)+1; // "Hello, world!" + NULL delimiter.
+	uLong compSize = compressBound(ucompSize);
+
+	// Deflate
+	compress((Bytef *)b, &compSize, (Bytef *)a, ucompSize);
+
+	// Inflate
+	uncompress((Bytef *)a, &ucompSize, (Bytef *)b, compSize);
+	printf("Original size is: %lu\n", strlen(a));
+    printf("Original string is: %s\n", a);
+	
+	printf("Compressed size is: %lu\n", strlen(b));
+    printf("Compressed string is: %s\n", b);
+	
+	printf("Decompressed size is: %lu\n", strlen(a));
+    printf("Decompressed string is: %s\n", a);
+}	
